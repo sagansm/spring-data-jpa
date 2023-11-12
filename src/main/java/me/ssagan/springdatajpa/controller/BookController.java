@@ -1,8 +1,7 @@
 package me.ssagan.springdatajpa.controller;
 
 import lombok.RequiredArgsConstructor;
-import me.ssagan.springdatajpa.dto.BookDto;
-import me.ssagan.springdatajpa.dto.BookWithGenreDto;
+import me.ssagan.springdatajpa.dto.*;
 import me.ssagan.springdatajpa.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,13 +9,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class BookController {
     final BookService service;
-    /*@GetMapping("/{id}")
-    BookDto getBookById(@PathVariable("id") Long id){
+
+    @GetMapping("book/{id}")
+    BookWithGenreAndAuthorsDto getBookById(@PathVariable("id") Long id) {
         return service.getBookById(id);
-    }*/
+    }
 
     @GetMapping("/book")
-    BookWithGenreDto getBookByNameV1(@RequestParam("name") String name){
+    BookWithGenreDto getBookByNameV1(@RequestParam("name") String name) {
         return service.getBookByNameV1(name);
     }
 
@@ -29,4 +29,25 @@ public class BookController {
     BookWithGenreDto getBookByNameV3(@RequestParam("name") String name) {
         return service.getByNameV3(name);
     }
+
+    @PostMapping("/book")
+    BookDto createBook(@RequestBody BookCreateDto bookCreateDto) {
+        return service.createBook(bookCreateDto);
+    }
+
+    @PostMapping("/bookbystrings")
+    BookDto createBookByStrings(@RequestBody BookCreateByStringsDto dto) {
+        return service.createBookByStrings(dto);
+    }
+
+    @PutMapping("/book/{id}")
+    BookDto updateBook(@PathVariable("id") Long id, @RequestBody BookCreateDto bookCreateDto) {
+        return service.updateBook(id, bookCreateDto);
+    }
+
+    @DeleteMapping("/book/{id}")
+    void deleteBook(@PathVariable("id") Long id) {
+        service.deleteBook(id);
+    }
+
 }

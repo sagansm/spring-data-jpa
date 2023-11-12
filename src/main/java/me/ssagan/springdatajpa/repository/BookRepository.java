@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificationExecutor<Book> {
-
     Optional<Book> findBookByName(String name);
 
     @Query(nativeQuery = true, value = "SELECT * FROM BOOK WHERE name = ?")

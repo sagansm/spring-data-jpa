@@ -7,9 +7,9 @@ import java.util.List;
 
 @Data
 @Builder
-public class AuthorWithBooksDto {
+public class BookWithGenreAndAuthorsDto {
     Long id;
     String name;
-    String surname;
-    List<BookWithGenreDto> books;
+    List<AuthorDto> authors;
+    String genre;
 }

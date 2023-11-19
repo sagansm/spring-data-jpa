@@ -29,6 +29,12 @@ public class BookServiceImpl implements BookService {
     final AuthorRepository authorRepository;
 
     @Override
+    public List<BookWithGenreAndAuthorsDto> gelAllBooks() {
+        List<Book> bookList= repository.findAll();
+        return bookList.stream().map(this::convertToBookWithGenreAndAuthorsDtoDto).toList();
+    }
+
+    @Override
     public BookWithGenreAndAuthorsDto getBookById(Long id) {
         Book book = repository.findById(id).orElseThrow();
         return convertToBookWithGenreAndAuthorsDtoDto(book);

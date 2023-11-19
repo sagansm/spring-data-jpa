@@ -3,14 +3,22 @@ package me.ssagan.springdatajpa.controller;
 import lombok.RequiredArgsConstructor;
 import me.ssagan.springdatajpa.dto.*;
 import me.ssagan.springdatajpa.service.BookService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class BookController {
     final BookService service;
 
-    @GetMapping("book/{id}")
+    @GetMapping("/books")
+    String getBooksView(Model model) {
+        model.addAttribute("books", service.gelAllBooks());
+        return "books";
+    }
+
+    /*@GetMapping("book/{id}")
     BookWithGenreAndAuthorsDto getBookById(@PathVariable("id") Long id) {
         return service.getBookById(id);
     }
@@ -48,6 +56,6 @@ public class BookController {
     @DeleteMapping("/book/{id}")
     void deleteBook(@PathVariable("id") Long id) {
         service.deleteBook(id);
-    }
+    }*/
 
 }

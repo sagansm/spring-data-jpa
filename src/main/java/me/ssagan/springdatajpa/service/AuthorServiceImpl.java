@@ -16,12 +16,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 @RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
-
     final AuthorRepository repository;
+
+    @Override
+    public List<AuthorDto> getAllAuthors() {
+        return repository.findAll().stream().map(this::convertToAuthorDto).toList();
+    }
 
     @Override
     public AuthorWithBooksDto getAuthorById(Long id) {

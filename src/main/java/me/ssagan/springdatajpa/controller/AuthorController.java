@@ -5,14 +5,22 @@ import me.ssagan.springdatajpa.dto.AuthorCreateDto;
 import me.ssagan.springdatajpa.dto.AuthorDto;
 import me.ssagan.springdatajpa.dto.AuthorWithBooksDto;
 import me.ssagan.springdatajpa.service.AuthorService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class AuthorController {
     final AuthorService service;
 
-    @GetMapping("/author/{id}")
+    @GetMapping("/authors")
+    String getBooksView(Model model) {
+        model.addAttribute("authors", service.getAllAuthors());
+        return "authors";
+    }
+
+    /*@GetMapping("/author/{id}")
     AuthorWithBooksDto getAuthorById(@PathVariable("id") Long id) {
         return service.getAuthorById(id);
     }
@@ -45,5 +53,5 @@ public class AuthorController {
     @DeleteMapping("/author/{id}")
     void deleteAuthor(@PathVariable("id") Long id) {
         service.deleteAuthor(id);
-    }
+    }*/
 }

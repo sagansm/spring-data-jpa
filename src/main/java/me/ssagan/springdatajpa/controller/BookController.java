@@ -7,18 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class BookController {
     final BookService service;
 
-    @GetMapping("/books")
+/*    @GetMapping("/books")
     String getBooksView(Model model) {
         model.addAttribute("books", service.gelAllBooks());
         return "books";
-    }
+    }*/
 
-    /*@GetMapping("book/{id}")
+    @GetMapping("book/{id}")
     BookWithGenreAndAuthorsDto getBookById(@PathVariable("id") Long id) {
         return service.getBookById(id);
     }
@@ -56,6 +56,5 @@ public class BookController {
     @DeleteMapping("/book/{id}")
     void deleteBook(@PathVariable("id") Long id) {
         service.deleteBook(id);
-    }*/
-
+    }
 }

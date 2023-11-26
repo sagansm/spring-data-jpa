@@ -41,19 +41,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookWithGenreDto getBookByNameV1(String name) {
+    public BookWithGenreDto getBookByName(String name) {
         Book book = repository.findBookByName(name).orElseThrow();
         return convertToDto(book);
     }
 
     @Override
-    public BookWithGenreDto getByNameV2(String name) {
+    public BookWithGenreDto getBookByNameBySql(String name) {
         Book book = repository.findBookByNameBySql(name).orElseThrow();
         return convertToDto(book);
     }
 
     @Override
-    public BookWithGenreDto getByNameV3(String name) {
+    public BookWithGenreDto getByNameByCriteria(String name) {
         Specification<Book> specification = Specification.where(new Specification<Book>() {
             @Override
             public Predicate toPredicate(Root<Book> root,

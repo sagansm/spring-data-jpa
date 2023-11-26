@@ -11,11 +11,11 @@ public interface AuthorService {
     List<AuthorDto> getAllAuthors();
     AuthorWithBooksDto getAuthorById(Long id);
 
-    AuthorWithBooksDto getAuthorByNameV1(String name);
+    AuthorWithBooksDto getAuthorByName(String name);
 
-    AuthorWithBooksDto getAuthorByNameV2(String name);
+    AuthorWithBooksDto getAuthorByNameBySql(String name);
 
-    AuthorWithBooksDto getAuthorByNameV3(String name);
+    AuthorWithBooksDto getAuthorByNameByCriteria(String name);
 
     AuthorDto createAuthor(AuthorCreateDto dto);
 

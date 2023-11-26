@@ -9,11 +9,11 @@ public interface BookService {
 
     BookWithGenreAndAuthorsDto getBookById(Long id);
 
-    BookWithGenreDto getBookByNameV1(String name);
+    BookWithGenreDto getBookByName(String name);
 
-    BookWithGenreDto getByNameV2(String name);
+    BookWithGenreDto getBookByNameBySql(String name);
 
-    BookWithGenreDto getByNameV3(String name);
+    BookWithGenreDto getByNameByCriteria(String name);
 
     BookDto createBook(BookCreateDto dto);
 

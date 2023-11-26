@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-public class GenreController {
+public class GenreRestController {
     final GenreService service;
 
     @GetMapping("genre/{id}")

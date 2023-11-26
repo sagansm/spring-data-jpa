@@ -33,19 +33,19 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorWithBooksDto getAuthorByNameV1(String name) {
+    public AuthorWithBooksDto getAuthorByName(String name) {
         Author author = repository.findAuthorByName(name).orElseThrow();
         return convertToDto(author);
     }
 
     @Override
-    public AuthorWithBooksDto getAuthorByNameV2(String name) {
+    public AuthorWithBooksDto getAuthorByNameBySql(String name) {
         Author author = repository.findAuthorByNameBySql(name).orElseThrow();
         return convertToDto(author);
     }
 
     @Override
-    public AuthorWithBooksDto getAuthorByNameV3(String name) {
+    public AuthorWithBooksDto getAuthorByNameByCriteria(String name) {
         Specification<Author> specification = Specification.where(new Specification<Author>() {
             @Override
             public Predicate toPredicate(Root<Author> root,

@@ -18,8 +18,8 @@
       );
 
 insert into users(username, password) values
-('ssagan', 'password'),
-('admin', 'password');
+('ssagan', '$2a$10$Y4NGLo4gdbLRgVgOB/LLO.y8xXj3CPdR1dQdyhUyX505rRQ20/kN.'),
+('admin', '$2a$10$Y4NGLo4gdbLRgVgOB/LLO.y8xXj3CPdR1dQdyhUyX505rRQ20/kN.');
 
 insert into roles(name) values
 ('ROLE_USER'),

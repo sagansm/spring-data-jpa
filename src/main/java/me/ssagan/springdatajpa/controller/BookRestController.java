@@ -1,5 +1,7 @@
 package me.ssagan.springdatajpa.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import me.ssagan.springdatajpa.dto.*;
 import me.ssagan.springdatajpa.service.BookService;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@SecurityRequirement(name = "library-users")
 public class BookRestController {
     final BookService service;
 
@@ -31,17 +34,17 @@ public class BookRestController {
     }
 
     @PostMapping("/book")
-    BookDto createBook(@RequestBody BookCreateDto bookCreateDto) {
+    BookDto createBook(@RequestBody @Valid BookCreateDto bookCreateDto) {
         return service.createBook(bookCreateDto);
     }
 
     @PostMapping("/bookbystrings")
-    BookDto createBookByStrings(@RequestBody BookCreateByStringsDto dto) {
+    BookDto createBookByStrings(@RequestBody @Valid BookCreateByStringsDto dto) {
         return service.createBookByStrings(dto);
     }
 
     @PutMapping("/book/{id}")
-    BookDto updateBook(@PathVariable("id") Long id, @RequestBody BookCreateDto bookCreateDto) {
+    BookDto updateBook(@PathVariable("id") Long id, @RequestBody @Valid BookCreateDto bookCreateDto) {
         return service.updateBook(id, bookCreateDto);
     }
 

@@ -1,5 +1,7 @@
 package me.ssagan.springdatajpa.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import me.ssagan.springdatajpa.dto.AuthorCreateDto;
 import me.ssagan.springdatajpa.dto.AuthorDto;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@SecurityRequirement(name = "library-users")
 public class AuthorRestController {
     final AuthorService service;
 
@@ -34,12 +37,12 @@ public class AuthorRestController {
     }
 
     @PostMapping("/author")
-    AuthorDto createAuthor(@RequestBody AuthorCreateDto authorCreateDto) {
+    AuthorDto createAuthor(@RequestBody @Valid AuthorCreateDto authorCreateDto) {
         return service.createAuthor(authorCreateDto);
     }
 
     @PutMapping("/author/{id}")
-    AuthorDto updateAuthor(@PathVariable("id") Long id, @RequestBody AuthorCreateDto authorCreateDto) {
+    AuthorDto updateAuthor(@PathVariable("id") Long id, @RequestBody @Valid AuthorCreateDto authorCreateDto) {
         return service.updateAuthor(id, authorCreateDto);
     }
 

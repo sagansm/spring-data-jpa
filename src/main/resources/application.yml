@@ -6,3 +6,7 @@ spring:
 
   liquibase:
     change-log: classpath:/db/baseChangelog.yml
+
+logging:
+  file:
+    name: library.log

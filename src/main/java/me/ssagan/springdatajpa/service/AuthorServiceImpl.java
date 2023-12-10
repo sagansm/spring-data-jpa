@@ -9,6 +9,7 @@ import me.ssagan.springdatajpa.SpringDataJpaApplication;
 import me.ssagan.springdatajpa.dto.AuthorCreateDto;
 import me.ssagan.springdatajpa.dto.AuthorDto;
 import me.ssagan.springdatajpa.dto.AuthorWithBooksDto;
+import me.ssagan.springdatajpa.dto.BookWithGenreDto;
 import me.ssagan.springdatajpa.dto.mapper.AuthorCreateDtoMapper;
 import me.ssagan.springdatajpa.dto.mapper.AuthorDtoMapper;
 import me.ssagan.springdatajpa.dto.mapper.AuthorWithBooksDtoMapper;
@@ -26,16 +27,22 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
-    final AuthorRepository repository;
-    final AuthorCreateDtoMapper authorCreateDtoMapper;
-    final AuthorWithBooksDtoMapper authorWithBooksDtoMapper;
-    final AuthorDtoMapper authorDtoMapper;
+
+    private final AuthorRepository repository;
+
+    private final AuthorCreateDtoMapper authorCreateDtoMapper;
+
+    private final AuthorDtoMapper authorDtoMapper;
+
+    private final AuthorWithBooksDtoMapper authorWithBooksDtoMapper;
+
     static final Logger log = LoggerFactory.getLogger(SpringDataJpaApplication.class);
 
     @Override
     public List<AuthorDto> getAllAuthors() {
         log.info("Getting all authors");
         return repository.findAll().stream().map(authorDtoMapper::toDto).toList();
+        //return repository.findAll().stream().map(this::convertToAuthorDto).toList();
     }
 
     @Override
@@ -43,9 +50,11 @@ public class AuthorServiceImpl implements AuthorService {
         log.info("Try to find author by id {}", id);
         Optional<Author> authorOptional = repository.findById(id);
         if (authorOptional.isPresent()) {
-            AuthorWithBooksDto dto = authorWithBooksDtoMapper.toDto(authorOptional.get());
-            log.info("Author: {}", dto.toString());
-            return dto;
+            Author author = authorOptional.get();
+            AuthorWithBooksDto my_dto = authorWithBooksDtoMapper.toDto(author);
+            //AuthorWithBooksDto dto = convertToDto(authorOptional.get());
+            log.info("Author: {}", my_dto.toString());
+            return my_dto;
         } else {
             log.error("Author with id {} not found", id);
             throw new NoSuchElementException("No value present");
@@ -58,6 +67,7 @@ public class AuthorServiceImpl implements AuthorService {
         Optional<Author> authorOptional = repository.findAuthorByName(name);
         if(authorOptional.isPresent()){
             AuthorWithBooksDto dto = authorWithBooksDtoMapper.toDto(authorOptional.get());
+            //AuthorWithBooksDto dto = convertToDto(authorOptional.get());
             log.info("Author: {}", dto.toString());
             return dto;
         } else {
@@ -72,6 +82,7 @@ public class AuthorServiceImpl implements AuthorService {
         Optional<Author> authorOptional = repository.findAuthorByNameBySql(name);
         if(authorOptional.isPresent()){
             AuthorWithBooksDto dto = authorWithBooksDtoMapper.toDto(authorOptional.get());
+            //AuthorWithBooksDto dto = convertToDto(authorOptional.get());
             log.info("Author: {}", dto.toString());
             return dto;
         } else {
@@ -95,6 +106,7 @@ public class AuthorServiceImpl implements AuthorService {
         Optional<Author> authorOptional = repository.findOne(specification);
         if(authorOptional.isPresent()){
             AuthorWithBooksDto dto = authorWithBooksDtoMapper.toDto(authorOptional.get());
+            //AuthorWithBooksDto dto = convertToDto(authorOptional.get());
             log.info("Author: {}", dto.toString());
             return dto;
         } else {
@@ -110,6 +122,7 @@ public class AuthorServiceImpl implements AuthorService {
         try {
             Author savedAuthor = repository.save(author);
             AuthorDto saved_dto = authorDtoMapper.toDto(savedAuthor);
+            //AuthorDto saved_dto = convertToAuthorDto(savedAuthor);
             log.info("Author saved: {}", saved_dto.toString());
             return saved_dto;
         } catch (RuntimeException e) {
@@ -129,8 +142,10 @@ public class AuthorServiceImpl implements AuthorService {
             try {
                 Author savedAuthor = repository.save(author);
                 AuthorDto saved_dto = authorDtoMapper.toDto(savedAuthor);
+                //AuthorDto saved_dto = convertToAuthorDto(savedAuthor);
                 log.info("Author updated: {}", saved_dto.toString());
                 return authorDtoMapper.toDto(savedAuthor);
+                //return convertToAuthorDto(savedAuthor);
             } catch (RuntimeException e) {
                 log.error("Author not saved: " + e.toString());
                 throw new RuntimeException(e.toString());
@@ -164,9 +179,9 @@ public class AuthorServiceImpl implements AuthorService {
                 .name(dto.getName())
                 .surname(dto.getSurname())
                 .build();
-    }*/
+    }
 
-    /*private AuthorWithBooksDto convertToDto(Author author) {
+    private AuthorWithBooksDto convertToDto(Author author) {
         List<BookWithGenreDto> bookDtoList = author.getBooks()
                 .stream()
                 .map(book -> BookWithGenreDto
@@ -183,9 +198,9 @@ public class AuthorServiceImpl implements AuthorService {
                 .surname(author.getSurname())
                 .books(bookDtoList)
                 .build();
-    }*/
+    }
 
-    /*private AuthorDto convertToAuthorDto(Author author) {
+    private AuthorDto convertToAuthorDto(Author author) {
         return AuthorDto
                 .builder()
                 .id(author.getId())
